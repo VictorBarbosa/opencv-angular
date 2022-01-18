@@ -37,3 +37,6 @@
               "./projects/opencv-angular-lib/assets/js/utils.js"
             ]`
 
+
+## <div style="background:red;color:white"> Disclamer </div>
+>  <div style="background:red;color:white"> The opencv code is opencv-angular projects/opencv-angular-lib </div>
