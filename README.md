@@ -1,6 +1,6 @@
 # OpencvAngular
 
-> # This library was create to help angular user to use Opencv library
+> # This Wrapper was created to help angular user to use Opencv library
 
 ## How to set up
 
