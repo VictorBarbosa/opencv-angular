@@ -39,4 +39,4 @@
 
 
 ## <div style="background:red;color:white"> Disclamer </div>
->  <div style="background:red;color:white"> The opencv code is opencv-angular projects/opencv-angular-lib </div>
+>  <div style="background:red;color:white"> The opencv code is inside `projects/opencv-angular-lib` </div>
