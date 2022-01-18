@@ -39,4 +39,6 @@
 
 
 ## <div style="background:red;color:white"> Disclamer </div>
->  <div style="background:red;color:white"> The opencv code is inside `projects/opencv-angular-lib` </div>
+>  1 -   This project is plug'n'play, to using you need install using npm > `npm i opencv-angular` 
+ 
+>  2 -   The opencv code is inside `projects/opencv-angular-lib`  
