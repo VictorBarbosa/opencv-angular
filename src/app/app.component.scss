@@ -1,0 +1,18 @@
+.container {
+
+  width: 60%;
+  margin-left: 20%;
+  margin-right: auto;
+  margin-top: 3%;
+
+  .container-img {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+img {
+  width: 70%;
+  height: 100%;
+  margin: 10px;
+}

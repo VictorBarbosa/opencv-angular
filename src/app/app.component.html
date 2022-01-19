@@ -1,4 +1,18 @@
-<button (click)="start()">Start</button>
+<!-- <button (click)="start()">Start</button>
 <button (click)="stop()">Stop</button>
 <video #video></video>
-<canvas id='canvasOutput'></canvas>
+<canvas id='canvasOutput'></canvas> -->
+
+
+<div class="container">
+  <div>
+    <select (change)="changeColor(colorSelected)" [(ngModel)]="colorSelected">
+      <option>Select a color</option>
+      <option *ngFor="let item of dropdown" [value]="item.value">{{item.key}}**{{item.value}}</option>
+    </select>
+  </div>
+  <div class="container-img">
+    <img #imgOrinal  src="assets/lena.png">
+    <canvas #canvasImg  ></canvas>
+  </div>
+</div>

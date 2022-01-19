@@ -15,11 +15,60 @@ export class AppComponent implements OnInit {
    *
    */
   @ViewChild('video', { static: true }) video: ElementRef<HTMLVideoElement> | null = null;
+
+  /**
+   *
+   */
   @ViewChild('canvasOutput', { static: true }) canvasOutput: ElementRef<HTMLCanvasElement> | null = null;
+
+  /**
+   *
+   */
+  @ViewChild('imgOrinal', { static: true }) imgOrinal: ElementRef<HTMLImageElement> | null = null;
+  /**
+   *
+   */
+  @ViewChild('canvasImg', { static: true }) canvasImg: ElementRef<HTMLCanvasElement> | null = null;
+
   constructor(private cv: OpencvAngularService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
 
+
+    window.onload = () => {
+      this.cv.getColorsWithoutUnderfined().subscribe(x => { this.dropdown = x });
+
+      if (this.imgOrinal?.nativeElement && this.canvasImg) {
+
+        const img = new Image();
+        img.src = this.imgOrinal?.nativeElement.src;
+        const src = this.cv.imread(img);
+        this.cv.imshow(this.canvasImg.nativeElement, src);
+
+      }
+    }
+  }
+
+  private _dropdown: { key: string; value: number; }[] | null = null;;
+  public get dropdown(): { key: string; value: number; }[] | null {
+    return this._dropdown;
+  }
+  public set dropdown(v: { key: string; value: number; }[] | null) {
+    this._dropdown = v;
+  }
+
+
+  private _colorSelected: number | null = null;
+  public get colorSelected(): number | null {
+    return this._colorSelected;
+  }
+  public set colorSelected(v: number | null) {
+    this._colorSelected = v;
+  }
+
+  /**
+   * Start Camera
+   */
   start() {
     if (this.video) {
       const camera = this.cv.getStreamCamera(false, true);
@@ -29,15 +78,17 @@ export class AppComponent implements OnInit {
           this.video.nativeElement.play();
           this.video.nativeElement.addEventListener('canplay', () => this.newVideo(), false)
         }
-
       })
     }
-    // const HEAP8:Mat = this.ser.ellipse2Poly();
+
   }
+
+  /**
+   * Stop Camera
+   */
   stop() {
     if (this.video) {
       this.video.nativeElement.pause()
-
     }
   }
   private newVideo(): void {
@@ -91,6 +142,25 @@ export class AppComponent implements OnInit {
       // // schedule the first one.
       setTimeout(processVideo, 0);
     }
+  }
+
+  changeColor(selected: any) {
+
+
+    const col: number =  Number.parseInt(selected);
+
+    if (this.imgOrinal?.nativeElement && this.canvasImg) {
+
+
+      let dst = this.cv.Mat();
+      const img = new Image();
+      img.src = this.imgOrinal?.nativeElement.src;
+      const src = this.cv.imread(img);
+      this.cv.cvtColor(src, dst, col);
+      this.cv.imshow(this.canvasImg.nativeElement, dst);
+
+    }
+    // this.imgOpenCV?.nativeElement.
   }
 
 }

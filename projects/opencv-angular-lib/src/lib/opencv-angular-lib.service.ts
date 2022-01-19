@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
-import { OpencvProperties, Mat, CLAHE } from './opencv-angular';
-import { BehaviorSubject, Observable, Subject, Subscriber } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { CLAHE, Mat, OpencvProperties } from './opencv-angular';
 declare const cv: any;
 declare const Utils: any;
-
 @Injectable({
   providedIn: 'root'
-}
-
-)
+})
 export class OpencvAngularService extends OpencvProperties {
   /**
    * constructor
    */
   constructor() { super(cv); }
-
 
   /**
   * Mat
@@ -23,7 +19,7 @@ export class OpencvAngularService extends OpencvProperties {
   * @returns
   */
   public Mat(...args: [rows: number, cols: number, type: number] | []): Mat {
-    if (args) {
+    if (args.length > 0) {
       const rows = args[0]
       const cols = args[1]
       const type = args[2]
@@ -37,6 +33,7 @@ export class OpencvAngularService extends OpencvProperties {
   public HoughCircles(): any {
     return cv.HoughCircles()
   }
+
 
   public GaussianBlur(): any {
     return cv.GaussianBlur()
@@ -119,10 +116,6 @@ export class OpencvAngularService extends OpencvProperties {
 
   public cartToPolar(): any {
     return cv.cartToPolar()
-  }
-
-  public circle(): any {
-    return cv.circle()
   }
 
   public connectedComponents(): any {
@@ -1285,10 +1278,18 @@ export class OpencvAngularService extends OpencvProperties {
     return cv._sbrk()
   }
 
+  /**
+   *
+   * @returns
+   */
   public remap(): any {
     return cv.remap()
   }
 
+  /**
+   *
+   * @returns
+   */
   public line(): any {
     return cv.line()
   }
@@ -1520,20 +1521,9 @@ export class OpencvAngularService extends OpencvProperties {
    * get_first_emval
    * @returns
    */
-  public get_first_emval(): null | [{}
-
-    , { value: undefined }
-
-    , { value: null }
-
-    , { value: true }
-
-    , { value: false }
-
-  ] {
+  public get_first_emval(): null | [{}, { value: undefined }, { value: null }, { value: true }, { value: false }] {
     return cv.get_first_emval();
   }
-
 
   /**
    *
@@ -1730,203 +1720,529 @@ export class OpencvAngularService extends OpencvProperties {
     cv.BackgroundSubtractorMOG2()
   }
 
+  /**
+   *
+   * @param arg0
+   * @returns
+   */
   public CV_MAT_DEPTH(arg0: number): any {
     return cv.CV_MAT_DEPTH(arg0)
   }
 
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @param arg2
+   * @returns
+   */
   public CamShift(arg0: Mat, arg1: Mat, arg2: any): any {
     return cv.CamShift(arg0, arg1, arg2)
   }
 
-  public Circle() {
+
+  /**
+   *
+   */
+  public Circle(): void {
     cv.Circle()
   }
 
+  /**
+   *
+   */
   public DoubleVector() {
     cv.DoubleVector()
   }
 
-  FS_createDataFile(parent: any, name: any, data: any, canRead: any, canWrite: any, canOwn: any): any {
+  /**
+   *
+   * @param parent
+   * @param name
+   * @param data
+   * @param canRead
+   * @param canWrite
+   * @param canOwn
+   * @returns
+   */
+  public FS_createDataFile(parent: any, name: any, data: any, canRead: any, canWrite: any, canOwn: any): any {
     return cv.FS_createDataFile(parent, name, data, canRead, canWrite, canOwn)
   }
 
-  FS_createDevice(parent: any, name: any, input: any, output: any): any {
+  /**
+   *
+   * @param parent
+   * @param name
+   * @param input
+   * @param output
+   * @returns
+   */
+  public FS_createDevice(parent: any, name: any, input: any, output: any): any {
     return cv.FS_createDevice(parent, name, input, output)
   }
 
-  FS_createFolder(parent: any, name: any, canRead: any, canWrite: any): any {
+  /**
+   *
+   * @param parent
+   * @param name
+   * @param canRead
+   * @param canWrite
+   * @returns
+   */
+  public FS_createFolder(parent: any, name: any, canRead: any, canWrite: any): any {
     return cv.FS_createFolder(parent, name, canRead, canWrite)
   }
 
-  FS_createLazyFile(parent: any, name: any, url: any, canRead: any, canWrite: any): any {
+  /**
+   *
+   * @param parent
+   * @param name
+   * @param url
+   * @param canRead
+   * @param canWrite
+   * @returns
+   */
+  public FS_createLazyFile(parent: any, name: any, url: any, canRead: any, canWrite: any): any {
     return cv.FS_createLazyFile(parent, name, url, canRead, canWrite)
   }
 
-  FS_createLink(parent: any, name: any, target: any, canRead: any, canWrite: any): any {
+  /**
+   *
+   * @param parent
+   * @param name
+   * @param target
+   * @param canRead
+   * @param canWrite
+   * @returns
+   */
+  public FS_createLink(parent: any, name: any, target: any, canRead: any, canWrite: any): any {
     return cv.FS_createLink(parent, name, target, canRead, canWrite)
   }
 
-  FS_createPath(parent: any, path: any, canRead: any, canWrite: any): any {
+  /**
+   *
+   * @param parent
+   * @param path
+   * @param canRead
+   * @param canWrite
+   * @returns
+   */
+  public FS_createPath(parent: any, path: any, canRead: any, canWrite: any): any {
     return cv.FS_createPath(parent, path, canRead, canWrite)
   }
 
-  FS_createPreloadedFile(parent: any, name: any, url: any, canRead: any, canWrite: any, onload: any, onerror: any, dontCreateFile: any, canOwn: any, preFinish: any): any {
+  /**
+   *
+   * @param parent
+   * @param name
+   * @param url
+   * @param canRead
+   * @param canWrite
+   * @param onload
+   * @param onerror
+   * @param dontCreateFile
+   * @param canOwn
+   * @param preFinish
+   * @returns
+   */
+  public FS_createPreloadedFile(parent: any, name: any, url: any, canRead: any, canWrite: any, onload: any, onerror: any, dontCreateFile: any, canOwn: any, preFinish: any): any {
     return cv.FS_createPreloadedFile(parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish)
   }
 
-  FS_unlink(path: any): any {
+  /**
+   *
+   * @param path
+   * @returns
+   */
+  public FS_unlink(path: any): any {
     return cv.FS_unlink(path)
   }
 
-  HOGDescriptor(): any {
+  /**
+   *
+   * @returns
+   */
+  public HOGDescriptor(): any {
     return cv.HOGDescriptor()
   }
 
-  CascadeClassifier(): any {
+  /**
+   *
+   * @returns
+   */
+  public CascadeClassifier(): any {
     return cv.CascadeClassifier()
   }
 
-  Scalar(v0: any, v1: any, v2: any, v3: any): any {
+  /**
+   *
+   * @param v0
+   * @param v1
+   * @param v2
+   * @param v3
+   * @returns
+   */
+  public Scalar(v0: any, v1: any, v2: any, v3: any): any {
     return cv.Scalar(v0, v1, v2, v3)
   }
 
-  Point(x: any, y: any): any {
-    return cv.Point(x, y)
+  /**
+   *
+   * @param x
+   * @param y
+   * @returns
+   */
+  public Point(x: Mat, y: Mat): Mat {
+    const m = cv.Mat;
+    const _x = (x as typeof m);
+    const _y = (y as typeof m);
+    return (cv.Point(_x, _y) as typeof m);
   }
 
-  PointVector(): any {
+  /**
+   *
+   * @returns
+   */
+  public PointVector(): any {
     return cv.PointVector()
   }
 
-  Range(start: any, end: any): any {
+  /**
+   *
+   * @param start
+   * @param end
+   * @returns
+   */
+  public Range(start: any, end: any): any {
     return cv.Range(start, end)
   }
 
-  Rect(): any {
+  /**
+   *
+   * @returns
+   */
+  public Rect(): any {
     return cv.Rect()
   }
 
-  RectVector(): any {
+  /**
+   *
+   * @returns
+   */
+  public RectVector(): any {
     return cv.RectVector()
   }
 
-  RotatedRect(): any {
+  /**
+   *
+   * @returns
+   */
+  public RotatedRect(): any {
     return cv.RotatedRect()
   }
 
-  Size(width: any, height: any): any {
+  /**
+   *
+   * @param width
+   * @param height
+   * @returns
+   */
+  public Size(width: number, height: number): any {
     return cv.Size(width, height)
   }
 
-  TermCriteria(): any {
+  /**
+   *
+   * @returns
+   */
+  public TermCriteria(): any {
     return cv.TermCriteria()
   }
 
-  UnboundTypeError(): any {
+  /**
+   *
+   * @returns
+   */
+  public UnboundTypeError(): any {
     return cv.UnboundTypeError()
   }
 
-  VideoCapture(videoSource: string | HTMLVideoElement): any {
+  /**
+   *
+   * @param videoSource
+   * @returns
+   */
+  public VideoCapture(videoSource: string | HTMLVideoElement): any {
     return new cv.VideoCapture(videoSource)
   }
 
-  abort(what: any): any {
+  /**
+   *
+   * @param what
+   * @returns
+   */
+  public abort(what: any): any {
     return cv.abort(what)
   }
 
-  absdiff(arg0: any, arg1: any, arg2: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @param arg2
+   * @returns
+   */
+  public absdiff(arg0: any, arg1: any, arg2: any): any {
     return cv.absdiff(arg0, arg1, arg2)
   }
 
-  adaptiveThreshold(arg0: any, arg1: any, arg2: any, arg3: any, arg4: any, arg5: any, arg6: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @param arg2
+   * @param arg3
+   * @param arg4
+   * @param arg5
+   * @param arg6
+   * @returns
+   */
+  public adaptiveThreshold(arg0: any, arg1: any, arg2: any, arg3: any, arg4: any, arg5: any, arg6: any): any {
     return cv.adaptiveThreshold(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
   }
 
-  addRunDependency(id: any): any {
+  /**
+   *
+   * @param id
+   * @returns
+   */
+  public addRunDependency(id: any): any {
     return cv.addRunDependency(id)
   }
 
-  approxPolyDP(arg0: any, arg1: any, arg2: any, arg3: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @param arg2
+   * @param arg3
+   * @returns
+   */
+  public approxPolyDP(arg0: any, arg1: any, arg2: any, arg3: any): any {
     return cv.approxPolyDP(arg0, arg1, arg2, arg3)
   }
 
-  arcLength(arg0: any, arg1: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @returns
+   */
+  public arcLength(arg0: any, arg1: any): any {
     return cv.arcLength(arg0, arg1)
   }
 
-  boundingRect(arg0: any): any {
+  /**
+   *
+   * @param arg0
+   * @returns
+   */
+  public boundingRect(arg0: any): any {
     return cv.boundingRect(arg0)
   }
 
-  calcOpticalFlowFarneback(arg0: any, arg1: any, arg2: any, arg3: any, arg4: any, arg5: any, arg6: any, arg7: any, arg8: any, arg9: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @param arg2
+   * @param arg3
+   * @param arg4
+   * @param arg5
+   * @param arg6
+   * @param arg7
+   * @param arg8
+   * @param arg9
+   * @returns
+   */
+  public calcOpticalFlowFarneback(arg0: any, arg1: any, arg2: any, arg3: any, arg4: any, arg5: any, arg6: any, arg7: any, arg8: any, arg9: any): any {
     return cv.calcOpticalFlowFarneback(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
   }
 
-  calcBackProject(arg0: any, arg1: any, arg2: any, arg3: any, arg4: any, arg5: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @param arg2
+   * @param arg3
+   * @param arg4
+   * @param arg5
+   * @returns
+   */
+  public calcBackProject(arg0: any, arg1: any, arg2: any, arg3: any, arg4: any, arg5: any): any {
     return cv.calcBackProject(arg0, arg1, arg2, arg3, arg4, arg5)
   }
 
-  convexityDefects(arg0: any, arg1: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @returns
+   */
+  public convexityDefects(arg0: any, arg1: any): any {
     return cv.convexityDefects(arg0, arg1)
   }
 
-  rotatedRectPoints(arg0: any): any {
-    return cv.rotatedRectPoints(arg0)
+  /**
+   *
+   * @param arg0
+   * @returns
+   */
+  public rotatedRectPoints(arg0: Mat): Mat {
+    const mat = cv.Mat;
+    const _arg0 = (arg0 as typeof mat);
+    return (cv.rotatedRectPoints(_arg0) as typeof mat);
   }
 
-  run(args: any): any {
+  /**
+   *
+   * @param args
+   * @returns
+   */
+  public run(args: any): any {
     return cv.run(args)
   }
 
-  setDelayFunction(fn: any): any {
+  /**
+   *
+   * @param fn
+   * @returns
+   */
+  public setDelayFunction(fn: any): any {
     return cv.setDelayFunction(fn)
   }
 
-  setCanvasSize(width: number, height: number, noUpdates: any) {
+  /**
+   *
+   * @param width
+   * @param height
+   * @param noUpdates
+   * @returns
+   */
+  public setCanvasSize(width: number, height: number, noUpdates: any) {
     return cv.setCanvasSize(width, height, noUpdates)
   }
 
-  setRNGSeed(arg0: any): any {
+  /**
+   *
+   * @param arg0
+   * @returns
+   */
+  public setRNGSeed(arg0: any): any {
     return cv.setRNGSeed(arg0)
   }
 
-  setWindowTitle(title: any): any {
+  /**
+   *
+   * @param title
+   * @returns
+   */
+  public setWindowTitle(title: any): any {
     return cv.setWindowTitle(title)
   }
 
-  split(arg0: any, arg1: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @returns
+   */
+  public split(arg0: any, arg1: any): any {
     return cv.split(arg0, arg1)
   }
 
-  sqrt(arg0: any, arg1: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @returns
+   */
+  public sqrt(arg0: any, arg1: any): any {
     return cv.sqrt(arg0, arg1)
   }
 
-  then(func: any): any {
+  /**
+   *
+   * @param func
+   * @returns
+   */
+  public then(func: any): any {
     return cv.then(func)
   }
 
-  threshold(arg0: any, arg1: any, arg2: any, arg3: any, arg4: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @param arg2
+   * @param arg3
+   * @param arg4
+   * @returns
+   */
+  public threshold(arg0: any, arg1: any, arg2: any, arg3: any, arg4: any): any {
     return cv.threshold(arg0, arg1, arg2, arg3, arg4)
   }
 
-  trace(arg0: any): any {
+  /**
+   *
+   * @param arg0
+   * @returns
+   */
+  public trace(arg0: any): any {
     return cv.trace(arg0)
   }
 
-  transform(arg0: any, arg1: any, arg2: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @param arg2
+   * @returns
+   */
+  public transform(arg0: any, arg1: any, arg2: any): any {
     return cv.transform(arg0, arg1, arg2)
   }
 
-  vconcat(arg0: any, arg1: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @returns
+   */
+  public vconcat(arg0: any, arg1: any): any {
     return cv.vconcat(arg0, arg1)
   }
 
-  transpose(arg0: any, arg1: any): any {
-    return cv.transpose(arg0, arg1)
+  /**
+   * transpose
+   * @param arg0
+   * @param arg1
+   * @returns
+   */
+  public transpose(arg0: Mat, arg1: Mat): Mat {
+    const mat = cv.Mat;
+    const _arg0 = (arg0 as typeof mat);
+    const _arg1 = (arg1 as typeof mat);
+    return (cv.transpose(_arg0, _arg1) as typeof mat);
   }
 
-  watershed(arg0: any, arg1: any): any {
+  /**
+   *
+   * @param arg0
+   * @param arg1
+   * @returns
+   */
+  public watershed(arg0: any, arg1: any): any {
     return cv.watershed(arg0, arg1)
   }
 
@@ -1938,17 +2254,17 @@ export class OpencvAngularService extends OpencvProperties {
    * @param preferCurrentTab
    * @returns Return a Stream video from camera
    */
-  getStreamCamera(audio: boolean, video: boolean, peerIdentity?: string): Observable<MediaStream | null> {
+  public getStreamCamera(audio: boolean, video: boolean, peerIdentity?: string): Observable<MediaStream | null> {
     const ret = new BehaviorSubject<MediaStream | null>(null);
     navigator.mediaDevices.getUserMedia({ audio: audio, video: video, peerIdentity: peerIdentity }).then(stream => ret.next(stream))
     return ret.asObservable();
   }
 
   /**
-   *
+   * Delete Mat context
    * @param mat
    */
-  matDelete(mat: Mat): void {
+  public matDelete(mat: Mat): void {
     const m = cv.Mat;
     const del = (mat as typeof m)
     del.delete();
