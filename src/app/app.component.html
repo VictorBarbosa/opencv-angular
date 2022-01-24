@@ -3,7 +3,7 @@
 <video #video></video>
 <canvas id='canvasOutput'></canvas> -->
 
-
+<!--
 <div class="container">
   <div>
     <select (change)="changeColor(colorSelected)" [(ngModel)]="colorSelected">
@@ -12,7 +12,11 @@
     </select>
   </div>
   <div class="container-img">
-    <img #imgOrinal  src="assets/lena.png">
-    <canvas #canvasImg  ></canvas>
+    <img #imgOrinal src="assets/lena.png">
+    <canvas  id="canvasInput" #canvasImg></canvas>
   </div>
 </div>
+<canvas id="canvasInput"></canvas> -->
+
+
+<router-outlet></router-outlet>

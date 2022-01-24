@@ -16,6 +16,7 @@ export interface Mat {
     registeredClass: any;
     baseClass: undefined | any;
     downcast: number;
+
     instancePrototype: {
       channels: () => any,
       charAt: () => any,
@@ -37,6 +38,7 @@ export interface Mat {
       data64F: Float64Array;
       depth: () => any,
       diag: () => any,
+
       dot: (arg0: any) => any,
       doubleAt: () => any,
       doublePtr: () => any,
@@ -85,4 +87,5 @@ export interface Mat {
   matSize: Array<number>;
   rows: number;
   step: Array<number>;
+  read: (src: Mat) => any,
 }

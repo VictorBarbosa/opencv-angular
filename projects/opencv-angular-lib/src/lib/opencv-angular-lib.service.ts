@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CLAHE, Mat, OpencvProperties } from './opencv-angular';
+import { CLAHE, Mat, OpencvProperties, RectVector, Size } from './opencv-angular';
 declare const cv: any;
 declare const Utils: any;
 @Injectable({
   providedIn: 'root'
 })
 export class OpencvAngularService extends OpencvProperties {
+
   /**
    * constructor
    */
@@ -150,8 +151,8 @@ export class OpencvAngularService extends OpencvProperties {
     return cv.cornerMinEigenVal()
   }
 
-  public cvtColor(src: Mat, dst: Mat, color: number) {
-    cv.cvtColor(src, dst, color)
+  public cvtColor(src: Mat, dst: Mat, color: number, dstCn = 0) {
+    cv.cvtColor(src, dst, color, dstCn)
   }
 
   public demosaicing(): any {
@@ -1867,12 +1868,101 @@ export class OpencvAngularService extends OpencvProperties {
   }
 
   /**
-   *
+   * This method/fuction you'll you to detect just a element for time, ex:Face or mouth or Eyes etc...,
+   * if you need detect more than one target, you must use , detectCustom
+   * @param video Video src
+   * @param canvasOutput canvas where the image will be displayed
+   * @param cascadeFile haar cascade file name
+   * @param cascadePath path where haar cascade could be found , you need finish you path with /
+   * @param colorRGBA { r: number, g: number, b: number, a: number }
    * @returns
-   */
-  public CascadeClassifier(): any {
-    return cv.CascadeClassifier()
+  */
+  detectDefaultInVideo(video: HTMLVideoElement, canvasOutput: HTMLCanvasElement, cascadeFile: string, cascadePath: string, colorRGBA: { r: number, g: number, b: number, a: number }): { stopVideo: Function } {
+
+    let isEditable = true;
+    cascadePath += cascadeFile;
+    const src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+    const dst = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+    const gray = new cv.Mat();
+    const cap = new cv.VideoCapture(video);
+    const objectDetected = new cv.RectVector();
+    const classifier = new cv.CascadeClassifier();
+    const utils = new Utils('errorMessage');
+    let cancelCount = -1;
+    const stopVideo = () => {
+      // video.srcObject = null;
+      // video.pause();
+      // video.currentTime = 0;
+
+      if (gray.$$.ptr) {
+        gray.deleteLater();
+      }
+      if (classifier.$$.ptr) {
+        classifier.deleteLater();
+      }
+      if (objectDetected.$$.ptr) {
+        objectDetected.deleteLater();
+      }
+      cv.flushPendingDeletes();
+      isEditable = false;
+    }
+
+    utils.createFileFromUrl(cascadeFile, cascadePath, () => {
+      classifier.load(cascadeFile);
+
+      const processVideo = () => {
+        try {
+          if (!src.$$.ptr) { return; }
+          // start processing.
+          cap.read(src);
+          src.copyTo(dst);
+          // detect faces.
+          if (isEditable) {
+            cv.cvtColor(dst, gray, cv.COLOR_RGBA2GRAY, 0);
+            classifier.detectMultiScale(gray, objectDetected, 1.5, 3, 0);
+
+            // draw faces.
+
+            for (let i = 0; i < objectDetected.size(); ++i) {
+              const face = objectDetected.get(i);
+              const point1 = new cv.Point(face.x, face.y);
+              const point2 = new cv.Point(face.x + face.width, face.y + face.height);
+              cv.rectangle(dst, point1, point2, [colorRGBA.r, colorRGBA.g, colorRGBA.b, colorRGBA.a]);
+            }
+          }
+          cv.imshow(canvasOutput, dst);
+          cancelCount = requestAnimationFrame(processVideo);
+        } catch (err) {
+
+          if (video.height === 0 || video.width === 0) {
+            console.error(`The video width and height must be bigger than 0 : {height:${video.height}}{width:${video.width}}`)
+          } else {
+            console.error(err)
+          }
+
+          stopVideo();
+        }
+      };
+      processVideo();
+
+    })
+    return { stopVideo: stopVideo }
+
+
   }
+
+  /**
+   * Stop a video detection
+   * @param idFrame
+   */
+  stopDetectDefaultInVideo(idFrame: number): void {
+    cancelAnimationFrame(idFrame)
+  }
+
+  public detectCustom() {
+
+  }
+
 
   /**
    *
@@ -1929,8 +2019,8 @@ export class OpencvAngularService extends OpencvProperties {
    *
    * @returns
    */
-  public RectVector(): any {
-    return cv.RectVector()
+  public RectVector(): RectVector {
+    return new cv.RectVector()
   }
 
   /**
@@ -1947,8 +2037,8 @@ export class OpencvAngularService extends OpencvProperties {
    * @param height
    * @returns
    */
-  public Size(width: number, height: number): any {
-    return cv.Size(width, height)
+  public Size(width: number, height: number): Size {
+    return new cv.Size(width, height)
   }
 
   /**

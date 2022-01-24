@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { OpencvAngularService } from '../../projects/opencv-angular-lib/src/public-api';
+declare const cv: any;
 const constraints = {
   'qvga': { width: { exact: 320 }, height: { exact: 240 } },
   'vga': { width: { exact: 640 }, height: { exact: 480 } }
@@ -11,6 +12,11 @@ const constraints = {
 })
 export class AppComponent implements OnInit {
   title = 'opencv-angular';
+
+
+  @ViewChild('hiddenVideo', { static: true }) hiddenVideo!: ElementRef<HTMLVideoElement>;
+  @ViewChild('canvasOutPut', { static: true }) canvasOutPut!: ElementRef<HTMLCanvasElement>;
+
   /**
    *
    */
@@ -146,8 +152,7 @@ export class AppComponent implements OnInit {
 
   changeColor(selected: any) {
 
-
-    const col: number =  Number.parseInt(selected);
+    const col: number = Number.parseInt(selected);
 
     if (this.imgOrinal?.nativeElement && this.canvasImg) {
 
@@ -160,7 +165,10 @@ export class AppComponent implements OnInit {
       this.cv.imshow(this.canvasImg.nativeElement, dst);
 
     }
-    // this.imgOpenCV?.nativeElement.
+
   }
+
+
+
 
 }
